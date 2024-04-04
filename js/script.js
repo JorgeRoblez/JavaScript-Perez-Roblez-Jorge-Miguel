@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let imageInput = document.getElementById('imageInput');
     let widthInput = document.getElementById('widthInput');
     let heightInput = document.getElementById('heightInput');
-    let fontSizeRange = document.getElementById('fontSizeRange');
+    let detailRange = document.getElementById('detailRange');
     let generateButton = document.getElementById('generateButton');
     let asciiArt = document.getElementById('asciiArt');
     let redRange = document.getElementById('redRange');
@@ -10,12 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let blueRange = document.getElementById('blueRange');
     let bgColorInput = document.getElementById('bgColorInput');
     let textColorInput = document.getElementById('textColorInput');
+    let resetStylesButton = document.getElementById('resetStylesButton');
 
     // Eventos
     imageInput.addEventListener('change', generateAscii); // Cambio de imagen
     widthInput.addEventListener('input', generateAscii); // Cambio de ancho de lienzo
     heightInput.addEventListener('input', generateAscii); // Cambio de alto de lienzo
-    fontSizeRange.addEventListener('input', generateAscii); // Cambio de tamaño de fuente
+    detailRange.addEventListener('input', generateAscii); // Cambio de tamaño de fuente
     redRange.addEventListener('input', generateAscii); // Cambio de valor de rojo
     greenRange.addEventListener('input', generateAscii); // Cambio de valor de verde
     blueRange.addEventListener('input', generateAscii); // Cambio de valor de azul
@@ -24,13 +25,14 @@ document.addEventListener("DOMContentLoaded", function () {
         updateTextColor();
         generateAscii();
     }); // Cambiar color del texto
+    resetStylesButton.addEventListener('click', resetStyles); // Resetear estilos
 
     // Cargar la configuración de colores
     let savedConfig = JSON.parse(localStorage.getItem('asciiConfig'));
     if (savedConfig) {
         widthInput.value = savedConfig.width;
         heightInput.value = savedConfig.height;
-        fontSizeRange.value = savedConfig.fontSize;
+        detailRange.value = savedConfig.fontSize;
         redRange.value = savedConfig.red;
         greenRange.value = savedConfig.green;
         blueRange.value = savedConfig.blue;
@@ -55,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                asciiArt.innerHTML = getImageAscii(imageData, parseInt(fontSizeRange.value, 10));
+                asciiArt.innerHTML = getImageAscii(imageData, parseInt(detailRange.value, 10));
             };
             img.src = reader.result;
         };
@@ -109,12 +111,33 @@ document.addEventListener("DOMContentLoaded", function () {
         asciiArt.style.color = textColorInput.value;
     }
 
+    // Resetear estilos
+    function resetStyles() {
+        // Restaurar valores predeterminados
+        widthInput.value = "600";
+        heightInput.value = "600";
+        detailRange.value = "20";
+        redRange.value = "210";
+        greenRange.value = "200";
+        blueRange.value = "220";
+        bgColorInput.value = "#E4E9F5";
+        textColorInput.value = "#000000";
+
+        // Actualizar estilos
+        updateBackground();
+        updateTextColor();
+        generateAscii();
+
+        // Limpiar la configuración guardada
+        localStorage.removeItem('asciiConfig');
+    }
+
     // Guardar la configuración de colores en el almacenamiento web
     function saveConfig() {
         let config = {
             width: widthInput.value,
             height: heightInput.value,
-            fontSize: fontSizeRange.value,
+            fontSize: detailRange.value,
             red: redRange.value,
             green: greenRange.value,
             blue: blueRange.value,
