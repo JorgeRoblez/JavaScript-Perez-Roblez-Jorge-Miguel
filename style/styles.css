@@ -36,6 +36,21 @@ h2 {
 }
 
 
+input[type="color"] {
+    border: none;
+    outline: none;
+    border-radius: 4px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
 #asciiArt {
     font-family: monospace;
     white-space: pre;
@@ -45,30 +60,76 @@ h2 {
     display: flex;
 }
 
-
-label {
-    display: block;
-    margin-top: 10px;
-
-}
-
-input[type="file"],
-input[type="number"],
-input[type="range"],
-input[type="color"],
-button {
-    margin-top: 5px;
-}
-
 .color-range {
     margin-top: 15px;
 }
 
 .color-box {
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid #ccc;
+    width: 15px;
+    height: 15px;
     vertical-align: middle;
     margin-right: 5px;
+    border-radius: 5px;
+}
+
+.color-selector {
+    display: flex;
+    align-items: center; 
+    margin-top: 5px; 
+}
+
+.color-selector label {
+    margin-right: 10px; 
+    padding-top: 7px;
+}
+
+¨/*estilo inputs */
+
+label {
+    display: inline-block;
+    margin-top: 10px;
+    vertical-align: middle;
+}
+
+input[type="file"],
+input[type="number"],
+input[type="range"],
+input[type="color"],button {
+    margin-top: 10px;
+}
+
+input[type="number"] {
+    width: 100px;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 8px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"]:focus {
+    border-color: #8c00ff;
+}
+
+
+input[type="color"] {
+    border: none;
+    outline: none;
+    border-radius: 4px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
 }
