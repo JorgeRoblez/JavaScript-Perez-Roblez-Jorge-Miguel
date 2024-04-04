@@ -1,3 +1,4 @@
+/*estilos generales */
 body {
     font-family: monospace;
     background-color: #E4E9F5;
@@ -9,6 +10,7 @@ h2 {
     margin-block: 10px;
 }
 
+/*estilo contenedores */
 #container {
     display: flex;
     justify-content: space-between;
@@ -25,6 +27,7 @@ h2 {
     justify-content: center
 }
 
+/*estilo controles */
 #controls {
     margin: 0 auto;
     padding: 20px;
@@ -35,6 +38,7 @@ h2 {
 
 }
 
+/*estilos inputs generales */
 
 input[type="color"] {
     border: none;
@@ -51,6 +55,8 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 4px;
 }
 
+/*estilo lienzo */
+
 #asciiArt {
     font-family: monospace;
     white-space: pre;
@@ -60,8 +66,10 @@ input[type="color"]::-webkit-color-swatch {
     display: flex;
 }
 
+
+/*estilo selectores color */
 .color-range {
-    margin-top: 15px;
+    margin-top: 12px;
 }
 
 .color-box {
@@ -132,4 +140,41 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 4px;
+}
+
+
+.file-input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    padding-right: 8px;
+}
+
+.file-input::file-selector-button {
+    border: none;
+    padding: 6px 6px;
+    background-color: #5434DB;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.file-input::file-selector-button:hover {
+    background-color: #4628c9;
+}
+
+
+#resetStylesButton {
+    border: none;
+    padding:8px;
+    background-color: #5434DB;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    inline-size: -webkit-fill-available;
+    margin-top: 15px;
+}
+#resetStylesButton:hover {
+    background-color: #4628c9;
 }

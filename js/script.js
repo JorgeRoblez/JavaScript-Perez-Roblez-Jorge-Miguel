@@ -12,6 +12,31 @@ document.addEventListener("DOMContentLoaded", function () {
     let textColorInput = document.getElementById('textColorInput');
     let resetStylesButton = document.getElementById('resetStylesButton');
 
+    // Cargar la configuración de colores
+    let savedConfig = JSON.parse(localStorage.getItem('asciiConfig'));
+    if (savedConfig) {
+        widthInput.value = savedConfig.width;
+        heightInput.value = savedConfig.height;
+        detailRange.value = savedConfig.fontSize;
+        redRange.value = savedConfig.red;
+        greenRange.value = savedConfig.green;
+        blueRange.value = savedConfig.blue;
+        bgColorInput.value = savedConfig.bgColor;
+        textColorInput.value = savedConfig.textColor;
+        updateBackground();
+        updateTextColor();
+    } else {
+        // Establecer valores predeterminados solo si no hay configuración guardada
+        widthInput.value = "600";
+        heightInput.value = "600";
+        detailRange.value = "20";
+        redRange.value = "210";
+        greenRange.value = "200";
+        blueRange.value = "220";
+        bgColorInput.value = "#E4E9F5";
+        textColorInput.value = "#000000";
+    }
+
     // Eventos
     imageInput.addEventListener('change', generateAscii); // Cambio de imagen
     widthInput.addEventListener('input', generateAscii); // Cambio de ancho de lienzo
@@ -26,21 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
         generateAscii();
     }); // Cambiar color del texto
     resetStylesButton.addEventListener('click', resetStyles); // Resetear estilos
-
-    // Cargar la configuración de colores
-    let savedConfig = JSON.parse(localStorage.getItem('asciiConfig'));
-    if (savedConfig) {
-        widthInput.value = savedConfig.width;
-        heightInput.value = savedConfig.height;
-        detailRange.value = savedConfig.fontSize;
-        redRange.value = savedConfig.red;
-        greenRange.value = savedConfig.green;
-        blueRange.value = savedConfig.blue;
-        bgColorInput.value = savedConfig.bgColor;
-        textColorInput.value = savedConfig.textColor;
-        updateBackground();
-        updateTextColor();
-    }
 
     // Generar el ASCII 
     function generateAscii() {
