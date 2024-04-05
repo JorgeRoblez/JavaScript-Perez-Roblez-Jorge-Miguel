@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let widthInput = document.getElementById('widthInput');
     let heightInput = document.getElementById('heightInput');
     let detailRange = document.getElementById('detailRange');
-    let generateButton = document.getElementById('generateButton');
     let asciiArt = document.getElementById('asciiArt');
     let redRange = document.getElementById('redRange');
     let greenRange = document.getElementById('greenRange');
@@ -11,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let bgColorInput = document.getElementById('bgColorInput');
     let textColorInput = document.getElementById('textColorInput');
     let resetStylesButton = document.getElementById('resetStylesButton');
+
+    
 
     // Cargar la configuración de colores
     let savedConfig = JSON.parse(localStorage.getItem('asciiConfig'));
@@ -123,23 +124,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Resetear estilos
     function resetStyles() {
-        // Restaurar valores predeterminados
-        widthInput.value = "600";
-        heightInput.value = "600";
-        detailRange.value = "20";
-        redRange.value = "210";
-        greenRange.value = "200";
-        blueRange.value = "220";
-        bgColorInput.value = "#E4E9F5";
-        textColorInput.value = "#000000";
+        // SweetAlert para confirmar reset
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This will reset all styles to default values!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, reset',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            // confirmar reseteo
+            if (result.isConfirmed) {
+                // Restaurar valores predeterminados
+                widthInput.value = "600";
+                heightInput.value = "600";
+                detailRange.value = "20";
+                redRange.value = "210";
+                greenRange.value = "200";
+                blueRange.value = "220";
+                bgColorInput.value = "#E4E9F5";
+                textColorInput.value = "#000000";
 
-        // Actualizar estilos
-        updateBackground();
-        updateTextColor();
-        generateAscii();
+                // Actualizar estilos
+                updateBackground();
+                updateTextColor();
+                generateAscii();
 
-        // Limpiar la configuración guardada
-        localStorage.removeItem('asciiConfig');
+                // Limpiar la configuración guardada
+                localStorage.removeItem('asciiConfig');
+
+                // Notificación de éxito
+                Swal.fire(
+                    '¡Restored!',
+                    'Styles have been reset to default values.',
+                    'success'
+                );
+            }
+        });
     }
 
     // Guardar la configuración de colores en el almacenamiento web

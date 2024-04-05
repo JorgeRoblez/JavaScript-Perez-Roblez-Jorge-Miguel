@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador Imágenes ASCII</title>
     <link rel="stylesheet" href="style\styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
 
 <body>
@@ -28,26 +30,26 @@
             <label for="detailRange">Detail:</label>
             <input type="range" id="detailRange" min="10" max="40" step="2" value="20"><br>
             <div class="color-range">
-                <label for="redRange">Valor Rojo <span class="color-box"
+                <label for="redRange">Red Value <span class="color-box"
                         style="background-color: #ff0000;"></span>:</label>
                 <input type="range" id="redRange" min="0" max="255" step="1" value="100"><br>
             </div>
             <div class="color-range">
-                <label for="greenRange">Valor verde <span class="color-box"
+                <label for="greenRange">Green Value <span class="color-box"
                         style="background-color: #00ff2a;"></span>:</label>
                 <input type="range" id="greenRange" min="0" max="255" step="1" value="100"><br>
             </div>
             <div class="color-range">
-                <label for="blueRange">Valor azul <span class="color-box"
+                <label for="blueRange">Blue Value <span class="color-box"
                         style="background-color: #1900ff;"></span>:</label>
                 <input type="range" id="blueRange" min="0" max="255" step="1" value="100"><br>
             </div>
             <div class="color-selector">
-                <label for="bgColorInput">Color de fondo:</label>
+                <label for="bgColorInput">Background color:</label>
                 <input type="color" id="bgColorInput">
             </div>
             <div class="color-selector">
-                <label for="textColorInput">Color del texto:</label>
+                <label for="textColorInput">Text color:</label>
                 <input type="color" id="textColorInput">
             </div>
             <button id="resetStylesButton">Reset</button>
