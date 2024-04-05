@@ -13,20 +13,21 @@ document.addEventListener("DOMContentLoaded", function () {
     let applyCustomCharsButton = document.getElementById('applyCustomCharsButton');
     let customCharsInput = document.getElementById('customCharsInput');
 
-// Restricción ancho y alto máximo a 1500
-widthInput.addEventListener('input', function () {
-    if (parseInt(widthInput.value) > 1500) {
-        widthInput.value = "1500";
-    }
-    generateAscii();
-});
 
-heightInput.addEventListener('input', function () {
-    if (parseInt(heightInput.value) > 1500) {
-        heightInput.value = "1500";
-    }
-    generateAscii();
-});
+    // Restricción ancho y alto máximo 1500
+    widthInput.addEventListener('input', function () {
+        if (parseInt(widthInput.value) > 1500) {
+            widthInput.value = "1500";
+        }
+        generateAscii();
+    });
+
+    heightInput.addEventListener('input', function () {
+        if (parseInt(heightInput.value) > 1500) {
+            heightInput.value = "1500";
+        }
+        generateAscii();
+    });
 
     // Cargar la configuración de colores
     let savedConfig = JSON.parse(localStorage.getItem('asciiConfig'));
@@ -42,12 +43,12 @@ heightInput.addEventListener('input', function () {
         updateBackground();
         updateTextColor();
     } else {
-        // Establecer valores predeterminados solo si no hay configuración guardada
+        // valores predeterminados
         widthInput.value = "600";
         heightInput.value = "600";
-        detailRange.value = "20";
-        redRange.value = "210";
-        greenRange.value = "200";
+        detailRange.value = "25";
+        redRange.value = "220";
+        greenRange.value = "220";
         blueRange.value = "220";
         bgColorInput.value = "#E4E9F5";
         textColorInput.value = "#000000";
@@ -68,12 +69,12 @@ heightInput.addEventListener('input', function () {
     }); // Cambiar color del texto
     resetStylesButton.addEventListener('click', resetStyles); // Resetear estilos
 
-    // Aplicar caracteres personalizados al hacer clic en el botón "Apply"
+    // Aplicar caracteres personalizados
     applyCustomCharsButton.addEventListener('click', function () {
         generateAscii();
     });
 
-    // Generar el ASCII
+    // Generar ASCII
     function generateAscii() {
         let imageFile = imageInput.files[0];
         let reader = new FileReader();
@@ -94,11 +95,11 @@ heightInput.addEventListener('input', function () {
         };
         reader.readAsDataURL(imageFile);
 
-        // Guardar la configuración de colores
+        // Guardar la configuracion
         saveConfig();
     }
 
-    // Función para convertir la imagen en ASCII
+    // convertir la imagen en ASCII
     function getImageAscii(imageData, fontSize, customChars) {
         const chars = customChars.length > 0 ? customChars.split('') : [' ', '.', ':', '-', '=', '+', '*', '#', '%', '@']; // Convertimos la cadena de caracteres en un array
         let asciiArt = '';
@@ -108,7 +109,7 @@ heightInput.addEventListener('input', function () {
                 let pixelData = getPixelData(imageData, j, i);
                 let brightness = getBrightness(pixelData);
                 let charIndex = Math.floor((brightness / 255) * (numCustomChars - 1));
-                asciiArt += `<span style="color: ${textColorInput.value}; text-shadow: 1px 1px 2px rgba(0,0,0,0.);">${chars[charIndex]}</span>`;
+                asciiArt += `<span style="color: ${textColorInput.value}; text-shadow: 1px 1px 1px rgba(0,0,0,0.3);">${chars[charIndex]}</span>`;
             }
             asciiArt += '<br>';
         }
@@ -187,7 +188,7 @@ heightInput.addEventListener('input', function () {
         });
     }
 
-    // Guardar la configuración de colores en el almacenamiento web
+    // Guardar la configuración en navegador
     function saveConfig() {
         let config = {
             width: widthInput.value,
