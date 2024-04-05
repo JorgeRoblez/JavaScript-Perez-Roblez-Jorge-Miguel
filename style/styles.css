@@ -100,7 +100,6 @@ label {
     vertical-align: middle;
 }
 
-input[type="file"],
 input[type="number"],
 input[type="range"],
 input[type="color"],button {
@@ -178,3 +177,36 @@ input[type="color"]::-webkit-color-swatch {
 #resetStylesButton:hover {
     background-color: #4628c9;
 }
+
+
+
+input#detailRange {
+    direction: rtl;
+}
+
+
+        /* Estilo para el input */
+        input[type="text"] {
+            padding: 6px 10px; 
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Estilo para el botón */
+        button {
+            padding: 7px 16px;
+            background-color: #5434DB;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Estilo para el botón al pasar el cursor */
+        button:hover {
+            background-color: #4628c9;
+        }
+
+        input[type="file"]{
+            margin-block: 10px;
+        }

@@ -7,8 +7,22 @@
     <title>Generador Imágenes ASCII</title>
     <link rel="stylesheet" href="style\styles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+        .swal2-title {
+            color: black !important;
+        }
+        .swal2-styled:focus {
+            box-shadow: none;
+        }
+    </style>
+
 
 </head>
+<style>
+    .swal2-content {
+        color: black !important;
+    }
+</style>
 
 <body>
     <div id="container">
@@ -22,10 +36,13 @@
 
                 Pero de momento solo me quedo esperando la revisión jeje</p>
             <label for="imageInput" class="file-label">Cargar Imagen:</label>
-            <input type="file" id="imageInput" accept="image/*" class="file-input"><br>                
-            <label for="widthInput">Width:</label>
+            <input type="file" id="imageInput" accept="image/*" class="file-input"><br>
+            <label for="customCharsInput">Custom Characters:</label>
+            <input type="text" id="customCharsInput">
+            <button id="applyCustomCharsButton">Apply</button><br>
+            <label for="widthInput">Width:(1500 max)</label>
             <input type="number" id="widthInput" min="200" value="800" max="2000"><br>
-            <label for="heightInput">Height:</label>
+            <label for="heightInput">Height: (1500 max)</label>
             <input type="number" id="heightInput" min="200" value="800" max="2000"><br>
             <label for="detailRange">Detail:</label>
             <input type="range" id="detailRange" min="10" max="40" step="2" value="20"><br>

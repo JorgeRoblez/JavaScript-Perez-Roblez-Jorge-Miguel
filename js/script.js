@@ -10,8 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
     let bgColorInput = document.getElementById('bgColorInput');
     let textColorInput = document.getElementById('textColorInput');
     let resetStylesButton = document.getElementById('resetStylesButton');
+    let applyCustomCharsButton = document.getElementById('applyCustomCharsButton');
+    let customCharsInput = document.getElementById('customCharsInput');
 
-    
+// Restricción ancho y alto máximo a 1500
+widthInput.addEventListener('input', function () {
+    if (parseInt(widthInput.value) > 1500) {
+        widthInput.value = "1500";
+    }
+    generateAscii();
+});
+
+heightInput.addEventListener('input', function () {
+    if (parseInt(heightInput.value) > 1500) {
+        heightInput.value = "1500";
+    }
+    generateAscii();
+});
 
     // Cargar la configuración de colores
     let savedConfig = JSON.parse(localStorage.getItem('asciiConfig'));
@@ -53,7 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }); // Cambiar color del texto
     resetStylesButton.addEventListener('click', resetStyles); // Resetear estilos
 
-    // Generar el ASCII 
+    // Aplicar caracteres personalizados al hacer clic en el botón "Apply"
+    applyCustomCharsButton.addEventListener('click', function () {
+        generateAscii();
+    });
+
+    // Generar el ASCII
     function generateAscii() {
         let imageFile = imageInput.files[0];
         let reader = new FileReader();
@@ -68,26 +88,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                asciiArt.innerHTML = getImageAscii(imageData, parseInt(detailRange.value, 10));
+                asciiArt.innerHTML = getImageAscii(imageData, parseInt(detailRange.value, 10), customCharsInput.value); // Pasamos los caracteres personalizados como argumento
             };
             img.src = reader.result;
         };
         reader.readAsDataURL(imageFile);
 
-        // Guardar la configuración de colores 
+        // Guardar la configuración de colores
         saveConfig();
     }
 
-    // Función para convertir la imagen en ASCII 
-    function getImageAscii(imageData, fontSize) {
-        const chars = [' ', '.', ':', '-', '=', '+', '*', '#', '%', '@'];
+    // Función para convertir la imagen en ASCII
+    function getImageAscii(imageData, fontSize, customChars) {
+        const chars = customChars.length > 0 ? customChars.split('') : [' ', '.', ':', '-', '=', '+', '*', '#', '%', '@']; // Convertimos la cadena de caracteres en un array
         let asciiArt = '';
+        const numCustomChars = chars.length;
         for (let i = 0; i < imageData.height; i += fontSize / 2) {
             for (let j = 0; j < imageData.width; j += fontSize / 2) {
                 let pixelData = getPixelData(imageData, j, i);
                 let brightness = getBrightness(pixelData);
-                let charIndex = Math.floor((brightness / 255) * (chars.length - 1));
-                asciiArt += `<span style="color: ${textColorInput.value}; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">${chars[charIndex]}</span>`;
+                let charIndex = Math.floor((brightness / 255) * (numCustomChars - 1));
+                asciiArt += `<span style="color: ${textColorInput.value}; text-shadow: 1px 1px 2px rgba(0,0,0,0.);">${chars[charIndex]}</span>`;
             }
             asciiArt += '<br>';
         }
@@ -112,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pixelData[2] * (parseInt(blueRange.value) / 255)) / 3;
     }
 
-    // Cambiarl color de fondo
+    // Cambiar color de fondo
     function updateBackground() {
         document.body.style.backgroundColor = bgColorInput.value;
     }
@@ -130,10 +151,10 @@ document.addEventListener("DOMContentLoaded", function () {
             text: "This will reset all styles to default values!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: '#4628c9',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, reset',
-            cancelButtonText: 'Cancel'
+            cancelButtonText: 'Cancel',
         }).then((result) => {
             // confirmar reseteo
             if (result.isConfirmed) {
@@ -146,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 blueRange.value = "220";
                 bgColorInput.value = "#E4E9F5";
                 textColorInput.value = "#000000";
+                customCharsInput.value = ' .: -+=*#%@'; // Establecer caracteres predeterminados
 
                 // Actualizar estilos
                 updateBackground();
