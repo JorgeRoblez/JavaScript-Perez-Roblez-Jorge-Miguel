@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let imageInput = document.getElementById('imageInput');
+    let generateDog = document.getElementById('generateDog');
     let widthInput = document.getElementById('widthInput');
     let heightInput = document.getElementById('heightInput');
     let detailRange = document.getElementById('detailRange');
@@ -74,6 +75,39 @@ document.addEventListener("DOMContentLoaded", function () {
         generateAscii();
     });
 
+// Generar foto aleatoria de perrito
+generateDog.addEventListener('click', function () {
+    fetch('https://dog.ceo/api/breeds/image/random')
+        .then(response => response.json())
+        .then(data => {
+            let imageUrl = data.message;
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    let file = new File([blob], 'random_dog.jpg', { type: 'image/jpeg' });
+                    let filesList = new DataTransfer();
+                    filesList.items.add(file);
+                    imageInput.files = filesList.files;
+                    generateAscii(); // Generar Ascii
+                })
+                .catch(error => {
+                    console.error('Error fetching dog image:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Failed to fetch dog image!',
+                    });
+                });
+        })
+        .catch(error => {
+            console.error('Error fetching dog image:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to fetch dog image!',
+            });
+        });
+});
     // Generar ASCII
     function generateAscii() {
         let imageFile = imageInput.files[0];
