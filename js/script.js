@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let resetStylesButton = document.getElementById('resetStylesButton');
     let applyCustomCharsButton = document.getElementById('applyCustomCharsButton');
     let customCharsInput = document.getElementById('customCharsInput');
-
+    let generateDogButton = document.getElementById('generateDog'); // Nuevo botón
 
     // Restricción ancho y alto máximo 1500
     widthInput.addEventListener('input', function () {
@@ -69,6 +69,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }); // Cambiar color del texto
     resetStylesButton.addEventListener('click', resetStyles); // Resetear estilos
 
+    // evento para generar perro
+    generateDogButton.addEventListener('click', function() {
+        fetch('https://dog.ceo/api/breeds/image/random')
+        .then(response => response.json())
+        .then(data => {
+            let dogImageUrl = data.message;
+            loadImageAndGenerateAscii(dogImageUrl);
+        })
+        .catch(error => console.error('Error fetching dog image:', error));
+    });
+
     // Aplicar caracteres personalizados
     applyCustomCharsButton.addEventListener('click', function () {
         generateAscii();
@@ -89,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                asciiArt.innerHTML = getImageAscii(imageData, parseInt(detailRange.value, 10), customCharsInput.value); // Pasamos los caracteres personalizados como argumento
+                asciiArt.innerHTML = getImageAscii(imageData, parseInt(detailRange.value, 10), customCharsInput.value); 
             };
             img.src = reader.result;
         };
@@ -97,6 +108,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Guardar la configuracion
         saveConfig();
+    }
+
+    // cargar
+    function loadImageAndGenerateAscii(imageUrl) {
+        let img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = function () {
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+            canvas.width = parseInt(widthInput.value, 10);
+            canvas.height = parseInt(heightInput.value, 10);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            // Generar ASCII
+            asciiArt.innerHTML = getImageAscii(imageData, parseInt(detailRange.value, 10), customCharsInput.value);
+        };
+        img.src = imageUrl;
     }
 
     // convertir la imagen en ASCII
