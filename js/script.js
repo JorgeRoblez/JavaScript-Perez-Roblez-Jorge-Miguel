@@ -70,14 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
     resetStylesButton.addEventListener('click', resetStyles); // Resetear estilos
 
     // evento para generar perro
-    generateDogButton.addEventListener('click', function() {
+    generateDogButton.addEventListener('click', function () {
         fetch('https://dog.ceo/api/breeds/image/random')
-        .then(response => response.json())
-        .then(data => {
-            let dogImageUrl = data.message;
-            loadImageAndGenerateAscii(dogImageUrl);
-        })
-        .catch(error => console.error('Error fetching dog image:', error));
+            .then(response => response.json())
+            .then(data => {
+                let dogImageUrl = data.message;
+                loadImageAndGenerateAscii(dogImageUrl);
+            })
+            .catch(error => console.error('Error fetching dog image:', error));
     });
 
     // Aplicar caracteres personalizados
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                asciiArt.innerHTML = getImageAscii(imageData, parseInt(detailRange.value, 10), customCharsInput.value); 
+                asciiArt.innerHTML = getImageAscii(imageData, parseInt(detailRange.value, 10), customCharsInput.value);
             };
             img.src = reader.result;
         };
